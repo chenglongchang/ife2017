@@ -7,20 +7,23 @@ var Observer = (function(){
         for(let key in this.data){
             let val = this.data[key];
             if(this.data.hasOwnProperty(key)){
-                Object.defineProperty(this.data,key,{
-                    enumerable:true,
-                    configurable:true,
-                    get: function(){
-                        console.log('你访问了 ' + key);
-                        return val;
-                    },
-                    set: function(newValue){
-                        val = newValue;
-                        console.log('你设置了 ' + key + '，新的值为' + newValue);
-                    }
-                })
+                this.convert(key,val);
             }
         }
+    }
+    observer.prototype.convert = function(key,val){
+        Object.defineProperty(this.data,key,{
+            enumerable: true,
+            configurable: true,
+            get: function(){
+                console.log('你访问了 ' + key);
+                return val;
+            },
+            set: function(newValue){
+                val = newValue;
+                console.log('你设置了 ' + key + '，新的值为' + newValue);
+            }
+        })
     }
     return observer;
 })();
